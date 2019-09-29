@@ -7,10 +7,11 @@ This does not authenticate you, only makes the API call
 
 - Clone or download the repo
 - fill in your consumer key and access token from Pocket API (first create your app in Pocket)
+- run `lein uberjar`
 
 ## Usage
 
-    $ java -jar my-pocket-parser-0.1.0-standalone.jar
+    $ java -jar target/uberjar/my-pocket-parser-0.1.0-SNAPSHOT-standalone.jar
 
 ## Options
 
