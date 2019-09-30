@@ -2,8 +2,10 @@
   (:gen-class)
   (:require [clj-http.client :as http]
             [clojure.data.json :as json]
-            [my-pocket-parser.helpers :refer :all]))
+            [my-pocket-parser.helpers :refer :all]
+            [my-pocket-parser.stats :refer :all]))
 
+;; https://getpocket.com/developer/docs/v3/retrieve
 (def pocket-get-url (build-url "https://getpocket.com" "v3" "get"))
 
 (defn create-json-payload
@@ -31,29 +33,37 @@
 (def items (get m :list))
 
 ;; convert :time_added into time (is unix timestamp)
-(defn get-keys-for-item
-  "Return the specific keys for an item"
-  [item]
-  (select-keys (second item) [:given_url :favorite :time_added]))
+;;(defn get-specific-keys-for-item
+;;  "Return the specific keys for an item"
+;;  [item]
+;;  (select-keys (second item) [:given_url :favorite :time_added]))
   ;;(get-in (second item) [:given_url]))
 
 ;; each key in items
 ;; get [:given_url :favorite :time_added]
-(def working-map (map get-keys-for-item items))
+;; (def working-map (map get-keys-for-item items))
 
-(defn convert-time
-  "Return a new map with :time_added updated to actual timestamp"
-  [datamap]
-  (map :time_added datamap))
+;; (defn convert-time
+  ;; "Return a new map with :time_added updated to actual timestamp"
+  ;; [datamap]
+  ;; (map :time_added datamap))
 ;; probably create a function that extracts the :time_added for each item, then converts the time and puts it back in each item + return
 
-(defn sequence-of-events
-  []
-  (-> working-map ; get data, then transform
-      convert-time));TODO-> ))
+;; (defn sequence-of-events
+  ;; []
+  ;; (-> working-map ; get data, then transform
+      ;; convert-time));TODO-> ))
 ;; (transform convert_time working_map) 
 
 (defn -main
   "Grab dataset from Pocket and display stats"
   [& args]
-  (prn (count (sequence-of-events)))) ; temp: print the count of the map
+  ;; (prn (count (sequence-of-events)))) ; temp: print the count of the map
+  (let [i (partial items->seq-for-keyword items)]
+    (do
+      (prn (frequencies (i :status)))
+      (prn (frequencies (i :favorite)))
+      (prn (->>
+            (i :time_added)
+            (map str->int) ; convert to number
+            (map epoch->time)))))) ;convert to timestamp
