@@ -12,6 +12,7 @@
   (str base "/" version "/" path))
 
 (defn str->int
+  "Simply convert string to int"
   [s]
   (read-string s))
 
