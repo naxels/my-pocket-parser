@@ -1,19 +1,17 @@
 (ns my-pocket-parser.helpers
   (:require [java-time :as jt]
-            [clojure.edn :as edn]))
+            [clojure.edn :as edn]
+            [clojure.string :as str]))
 
 (def read-config
   (-> "resources/config.edn"
       (slurp)
       (edn/read-string)))
 
-;; (def read-config
-;;   (when-let [data (slurp (io/reader (io/resource "config.edn")))]
-;;     (edn/read-string data)))
-
 (defn build-url
-  [base version path]
-  (str base "/" version "/" path))
+  "Combine the URL parts"
+  [url-parts]
+  (str/join "/" url-parts))
 
 (defn str->int
   "Simply convert string to int"
