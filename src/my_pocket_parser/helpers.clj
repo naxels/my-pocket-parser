@@ -1,11 +1,15 @@
 (ns my-pocket-parser.helpers
   (:require [java-time :as jt]
-            [clojure.edn :as edn]
-            [clojure.java.io :as io]))
+            [clojure.edn :as edn]))
 
 (def read-config
-  (when-let [data (slurp (io/reader (io/resource "config.edn")))]
-    (edn/read-string data)))
+  (-> "resources/config.edn"
+      (slurp)
+      (edn/read-string)))
+
+;; (def read-config
+;;   (when-let [data (slurp (io/reader (io/resource "config.edn")))]
+;;     (edn/read-string data)))
 
 (defn build-url
   [base version path]
