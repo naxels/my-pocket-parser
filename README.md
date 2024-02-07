@@ -11,11 +11,15 @@ This does not authenticate you, only makes the API call
 - Authenticate yourself with Pocket in order to receive an access token
   - https://getpocket.com/developer/docs/authentication
 - Open resources/config.edn and fill in the consumer key and access token
-- run `run.sh`
 
 ## Usage
 
-    $ run.sh
+    To compile & execute:
+    $ ./run.sh
+    To build uberjar:
+    $ ./build.sh
+    To execute the uberjar:
+    $ java -jar target/my_pocket_parser-(version).jar
 
 ## Options
 
