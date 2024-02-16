@@ -1,7 +1,7 @@
 (ns my-pocket-parser.core
   (:gen-class)
   (:require [my-pocket-parser.utils :as u]
-            [my-pocket-parser.pocket :as p]))
+            [naxels.getpocket.api :as p]))
             ;[my-pocket-parser.stats :as stats]))
 
 (defn -main
@@ -10,7 +10,7 @@
   (let [p-opts (p/common-required-parameters [(:consumer-key u/read-config)
                                               (:access-token u/read-config)])
         retrieve-payload (p/payload p-opts p/retrieve-optional)
-        items (-> (u/http-retrieve p/retrieve retrieve-payload)
+        items (-> (p/retrieve retrieve-payload)
                   (get :list))]
     (println (str "Found " (count items) " items"))
     (doseq [[_id item] items]
@@ -34,8 +34,11 @@
   (def retrieve-payload (p/payload p-opts p/retrieve-optional))
 
   ;; item {id map}
-  (def items (-> (u/http-retrieve p/retrieve retrieve-payload)
+  (def items (-> (p/retrieve retrieve-payload)
                  (get :list)))
+
+  (def add-payload (p/payload p-opts {:url "https://clojure.org"}))
+  (p/add add-payload)
 
   items
 
