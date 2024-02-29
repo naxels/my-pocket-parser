@@ -7,8 +7,9 @@
 (defn -main
   "Grab dataset from Pocket and display stats"
   [& _args]
-  (let [p-opts (p/common-required-parameters [(:consumer-key u/read-config)
-                                              (:access-token u/read-config)])
+  (let [config (u/read-config)
+        p-opts (p/common-required-parameters [(:consumer-key config)
+                                              (:access-token config)])
         retrieve-payload (p/payload p-opts p/retrieve-optional)
         items (-> (p/retrieve retrieve-payload)
                   (get :list))]

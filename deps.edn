@@ -1,6 +1,7 @@
 {:paths   ["src"]
  :deps    {org.clojure/clojure {:mvn/version "1.11.1"}
            clojure.java-time/clojure.java-time {:mvn/version "1.4.2"}
-           net.clojars.naxels/getpocket-api {:mvn/version "0.0.3"}}
+           net.clojars.naxels/getpocket-api {:mvn/version "0.0.3"}
+           com.github.clj-easy/graal-build-time {:mvn/version "1.0.5"}}
  :aliases {:build {:extra-deps {io.github.clojure/tools.build {:git/tag "v0.9.6" :git/sha "8e78bcc"}}
                    :ns-default build}}}

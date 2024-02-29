@@ -2,7 +2,8 @@
   (:require [clojure.edn :as edn]
             [java-time.api :as jt]))
 
-(def read-config
+(defn read-config
+  []
   (-> "resources/config.edn"
       (slurp)
       (edn/read-string)))
